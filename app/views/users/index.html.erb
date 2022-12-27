@@ -25,6 +25,7 @@
         <% else %>
           <div class="float-end me-5"><%= link_to "Add Friend <i class='fa-solid fa-user-plus ms-3'></i>".html_safe, create_friend_request_friend_requests_path(user_id: user.id), class: "small-button bg-warning text-dark" %></div>
         <% end %>
+        
       </div>
     <% end %>
     <% unless params[:search].present? %>
