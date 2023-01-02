@@ -40,3 +40,6 @@ tmp/cache/
 tmp/development_secret.txt
 tmp/letter_opener/
 tmp/restart.txt
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat

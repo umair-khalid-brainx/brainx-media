@@ -1,7 +1,5 @@
 <% flash.each do |type, message| %>
-  <% if type == 'success' %>
-    <div class="notification notification-success" data-controller="removals" data-action="animationend->removals#remove"><%= message %></div>
-  <% elsif type == 'error' %>
+  <% if type == 'error' %>
     <div class="notification notification-error" data-controller="removals" data-action="animationend->removals#remove"><%= message %></div>
   <% else %>
     <div class="notification notification-success" data-controller="removals" data-action="animationend->removals#remove"><%= message %></div>
