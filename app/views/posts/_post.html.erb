@@ -4,15 +4,17 @@
       <div>
         <%= image_tag post.user.profile_photo, width: "4%", height: "4%", class: "align-middle me-2" %>
         <h5 class=" d-inline align-middle card-title d-inline fw-bold my-4 fs-3"><%= post.user.name %></h5>
-        <div class="dropdown float-end">
-          <button class="btn btn-light" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa-solid fa-bars text-dark fa-xl"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <%= link_to "Edit Post", edit_post_path(post.id), :class => "dropdown-item no-deco my-1 h5" %>
-            <%= link_to "Delete Post", post_path(post.id), data: { turbo: true, "turbo-method": :delete, turbo_confirm: "Are you sure?" }, :class => "dropdown-item no-deco my-1 h5" %>
+        <% if post.user == current_user %>
+          <div class="dropdown float-end">
+            <button class="btn btn-light" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa-solid fa-bars text-dark fa-xl"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <%= link_to "Edit Post", edit_post_path(post.id), :class => "dropdown-item no-deco my-1 h5" %>
+              <%= link_to "Delete Post", post_path(post.id), data: { turbo: true, "turbo-method": :delete, turbo_confirm: "Are you sure?" }, :class => "dropdown-item no-deco my-1 h5" %>
+            </div>
           </div>
-        </div>
+        <% end %>
         <hr>
         <p class="card-text my-2 fst-italic fs-6 text-secondary"><%= post.created_at.strftime("%I:%M %p, %d/%m/%Y") %></p>
         <p class="card-text my-4 fs-4"><%= post.content %></p>
@@ -44,13 +46,15 @@
         <%= turbo_frame_tag "comments_#{dom_id(post)}" do %>
           <div><%= render post.comments %></div>
         <% end %>
-        <hr>
-        <p class="card-text d-inline fw-bold my-4">Add a comment</p>
-        <%= form_with model: [post, post.comments.build], data: { controller: "reset-form", action: "turbo:submit-end->reset-form#clear" }, class: "flex-container" do |form| %>
-          <%= form.hidden_field :post_id, value: post.id %>
-          <div style="flex: 1"><%= form.text_field :text, class: 'p-2 form-control shadow-none' %></div>
-          <div><%= form.submit "Comment", class: "p-2 small-button text-light" %></div>
-        <% end %>
+        <div >
+          <hr>
+          <p class="card-text d-inline fw-bold my-4">Add a comment</p>
+          <%= form_with model: [post, post.comments.build], data: { controller: "reset-form", action: "turbo:submit-end->reset-form#clear" }, class: "flex-container" do |form| %>
+            <%= form.hidden_field :post_id, value: post.id %>
+            <div style="flex: 1"><%= form.text_field :text, class: 'p-2 form-control shadow-none' %></div>
+            <div><%= form.submit "Comment", class: "p-2 small-button text-light" %></div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
